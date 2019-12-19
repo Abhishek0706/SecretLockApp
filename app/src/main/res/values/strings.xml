@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SecretLockApp</string>
+    <string name="this_is_secret_screen">This is Secret Screen</string>
+    <string name="open_settings">open Settings</string>
+</resources>
