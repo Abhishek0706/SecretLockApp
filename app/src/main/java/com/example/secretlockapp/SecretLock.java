@@ -90,9 +90,14 @@ public class SecretLock {
 
         ListView listView = new ListView(context);
         ArrayList<Item> itemList = new ArrayList<Item>();
-        itemList.add(new Item("wifi", true));
-        itemList.add(new Item("bluetooth", false));
-        itemList.add(new Item("airplane mode", false));
+
+
+        HashMap<String, Boolean> preference = getPreferenceValues(context);
+
+
+        itemList.add(new Item("wifi", preference.get("wifi_status")));
+        itemList.add(new Item("bluetooth", preference.get("bluetooth_status")));
+        itemList.add(new Item("airplane mode", preference.get("airplanemode_status")));
         ItemAdapter adapter = new ItemAdapter(context, itemList);
         listView.setAdapter(adapter);
 
