@@ -20,7 +20,7 @@ import java.util.List;
 public class ItemAdapter extends ArrayAdapter<Item> {
 
     private Context mContext;
-    private List<Item> itemList = new ArrayList<Item>();
+    private List<Item> itemList;
 
 
     public ItemAdapter(@NonNull Context context, ArrayList<Item> itemList) {

@@ -88,7 +88,6 @@ public class SecretLock {
 
     void openSettings(Context context) {
 
-        ListView listView = new ListView(context);
         ArrayList<Item> itemList = new ArrayList<Item>();
 
 
@@ -98,16 +97,27 @@ public class SecretLock {
         itemList.add(new Item("wifi", preference.get("wifi_status")));
         itemList.add(new Item("bluetooth", preference.get("bluetooth_status")));
         itemList.add(new Item("airplane mode", preference.get("airplanemode_status")));
-        ItemAdapter adapter = new ItemAdapter(context, itemList);
-        listView.setAdapter(adapter);
+        final ItemAdapter adapter = new ItemAdapter(context, itemList);
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(true);
-        builder.setView(listView);
         builder.setTitle("Change Settings");
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+
         builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    //Save changes to Shared Preferences
+
+                }
 
             }
         });
