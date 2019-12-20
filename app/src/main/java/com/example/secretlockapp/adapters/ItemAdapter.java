@@ -1,10 +1,13 @@
 package com.example.secretlockapp.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -12,15 +15,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.secretlockapp.R;
+import com.example.secretlockapp.SecretLock;
 import com.example.secretlockapp.models.Item;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ItemAdapter extends ArrayAdapter<Item> {
 
     private Context mContext;
-    private List<Item> itemList;
+    private ArrayList<Item> itemList;
 
 
     public ItemAdapter(@NonNull Context context, ArrayList<Item> itemList) {
@@ -37,17 +44,39 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         }
 
-        Item item = getItem(position);
+        final Item item = getItem(position);
 
-        TextView name = convertView.findViewById(R.id.textview_name);
-        Switch value = convertView.findViewById(R.id.switch_value);
+        final TextView name = convertView.findViewById(R.id.textview_name);
+        final Switch value = convertView.findViewById(R.id.switch_value);
 
         if (item != null) {
             name.setText(item.getName());
+            value.setOnCheckedChangeListener(null);
             value.setChecked(item.getValue());
         }
 
-        return convertView;
+        value.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                HashMap<String, Boolean> _map = new HashMap<>();
+                _map.put(item.getName(), isChecked);
+                new SecretLock().setPreferenceValues(getContext(), _map);
+            }
+        });
 
+        return convertView;
+    }
+
+    public HashMap<String, Boolean> getAllItems() {
+        HashMap<String, Boolean> _map = new HashMap<String, Boolean>();
+        for (int i = 0; i < getCount(); i++) {
+            Item item = getItem(i);
+            if (item != null) {
+                _map.put(item.getName(), item.getValue());
+            }
+
+        }
+
+        return _map;
     }
 }

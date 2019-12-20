@@ -2,10 +2,9 @@ package com.example.secretlockapp;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.provider.Settings;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.secretlockapp.adapters.ItemAdapter;
 import com.example.secretlockapp.models.Item;
@@ -46,7 +45,7 @@ public class SecretLock {
 
     }
 
-    void setPreferenceValues(Context context, HashMap<String, Boolean> _map) {
+    public void setPreferenceValues(Context context, HashMap<String, Boolean> _map) {
         SharedPreferences pref = context.getSharedPreferences("system_settings", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         if (_map.containsKey("wifi_status")) {
@@ -73,7 +72,7 @@ public class SecretLock {
 
         HashMap<String, Boolean> preference = getPreferenceValues(context);
         HashMap<String, Boolean> system = getSystemValues(context);
-
+//
 //        Toast.makeText(context, "wifi value : " + preference.get("wifi_status") +
 //                "\nbluetooth value : " + preference.get("bluetooth_status") + "\nairplane value : "
 //                + preference.get("airplanemode_status"), Toast.LENGTH_SHORT).show();
@@ -86,7 +85,7 @@ public class SecretLock {
 
     }
 
-    void openSettings(Context context) {
+    void openSettings(final Context context) {
 
         ArrayList<Item> itemList = new ArrayList<Item>();
 
@@ -94,33 +93,17 @@ public class SecretLock {
         HashMap<String, Boolean> preference = getPreferenceValues(context);
 
 
-        itemList.add(new Item("wifi", preference.get("wifi_status")));
-        itemList.add(new Item("bluetooth", preference.get("bluetooth_status")));
-        itemList.add(new Item("airplane mode", preference.get("airplanemode_status")));
+        itemList.add(new Item("wifi_status", preference.get("wifi_status")));
+        itemList.add(new Item("bluetooth_status", preference.get("bluetooth_status")));
+        itemList.add(new Item("airplanemode_status", preference.get("airplanemode_status")));
         final ItemAdapter adapter = new ItemAdapter(context, itemList);
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(true);
         builder.setTitle("Change Settings");
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setAdapter(adapter, null);
 
-            }
-        });
-
-
-        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == DialogInterface.BUTTON_POSITIVE) {
-                    //Save changes to Shared Preferences
-
-                }
-
-            }
-        });
         AlertDialog dialog = builder.create();
         dialog.show();
 

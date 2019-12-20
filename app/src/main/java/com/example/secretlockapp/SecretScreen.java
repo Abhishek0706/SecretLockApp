@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class SecretScreen extends AppCompatActivity {
 
@@ -20,6 +21,8 @@ public class SecretScreen extends AppCompatActivity {
             public void onClick(View v) {
                 SecretLock myLock = new SecretLock();
                 myLock.openSettings(SecretScreen.this);
+//                Toast.makeText(getApplicationContext(), " " + myLock.getLockValue(getApplicationContext()), Toast.LENGTH_SHORT).show();
+                myLock.getLockValue(getApplicationContext());
             }
         });
     }

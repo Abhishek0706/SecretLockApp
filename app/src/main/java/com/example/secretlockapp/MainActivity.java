@@ -14,17 +14,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SecretLock secretLock = new SecretLock();
-        HashMap<String, Boolean> myMap = new HashMap<>();
-        myMap.put("wifi_status", true);
-        myMap.put("bluetooth_status", true);
-        myMap.put("airplanemode_status", false);
-
-        secretLock.setPreferenceValues(getApplicationContext(), myMap);
 
         Intent i = new Intent(this, SecretScreen.class);
-        if (secretLock.getLockValue(getApplicationContext())) {
+        if (new SecretLock().getLockValue(getApplicationContext())) {
             startActivity(i);
         }
+
     }
 }
